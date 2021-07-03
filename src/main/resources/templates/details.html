@@ -1,0 +1,48 @@
+<html lang="en"
+      xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main.html"
+      xmlns:sec = "http://www.thymeleaf.org/extras/spring-security">
+<div layout:fragment="mainContent">
+
+    <div class="row mt-5">
+        <div class="col-6 mx-auto">
+            <form th:action="@{'/savetask'}" method="post" th:if = "${item!=null}">
+                <input type="hidden" name="id" th:value="${item.getId()}">
+                <div class="card" style="width: 18rem; margin: 0 auto">
+                    <img th:src="${item.getPictureURL()}"  class="card-img-top">
+                    <div class="card-body">
+                        <div class="mt-2">
+                            <label for="name">
+                                NAME:
+                            </label>
+                            <input type="text" class="form-control mt-2" required id = "name" name="name" th:value="${item.getName()}">
+                        </div>
+                        <div class="mt-2">
+                            <label for="price">
+                                PRICE:
+                            </label>
+                            <input type="text" class="form-control mt-2" required id = "price" name="price" th:value="${item.getPrice()}">
+                        </div>
+                        <div class="mt-2">
+                            <label for="amount">
+                                AMOUNT:
+                            </label>
+                            <input type="number" class="form-control mt-2" required id = "amount" name="amount" th:value="${item.getAmount()}">
+                        </div>
+                        <div class="mt-2" sec:authorize="hasAnyRole('ROLE_REDAKTOR')">
+                            <label for="amount">
+                                PICTURE URL:
+                            </label>
+                            <input type="text" class="form-control mt-2" required id = "pictureURL" name="pictureURL" th:value="${item.getPictureURL()}">
+                        </div>
+                        <div class="mt-2" sec:authorize="hasAnyRole('ROLE_REDAKTOR')">
+                            <button type="submit" name="action" value="save" class = "btn btn-success">SAVE EDIT</button>
+                            <button type="submit" name="action" value="delete" class = "btn btn-danger">DELETE</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</html>

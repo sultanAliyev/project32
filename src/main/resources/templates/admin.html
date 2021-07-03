@@ -1,0 +1,37 @@
+<html lang="en"
+      xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main.html"
+      xmlns:sec = "http://www.thymeleaf.org/extras/spring-security">
+<div layout:fragment="mainContent">
+    <div class="row mt-5">
+        <div class="col-12 mx-auto">
+                    <table class="table table-responsive-lg table-hover">
+                        <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>EMAIL</th>
+                            <th>FULL NAME</th>
+                            <th>PHONE NUMBER</th>
+                            <th>ADDRESS</th>
+                            <th>OPTIONS</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr sec:authorize="hasAnyRole('ROLE_ADMIN')" th:if="${user.getId()!=9}" th:each="user : ${users}">
+                            <td th:text="${user.id}"></td>
+                            <td th:text="${user.email}"></td>
+                            <td th:text="${user.fullName}"></td>
+                            <td th:text="${user.phone_number}"></td>
+                            <td th:text="${user.address}"></td>
+                            <td width="10%">
+                                <a th:href="@{'/deleteuser/'+${user.getId()}}" class="btn btn-outline-danger btn-sm mb-1">DELETE USER</a>
+                                <a th:href="@{'/upgradeuser/'+${user.getId()}}" class="btn btn-outline-primary btn-sm mb-1">UPGRADE</a>
+                                <a th:href="@{'/downgradeuser/'+${user.getId()}}" class="btn btn-outline-secondary btn-sm mb-1">DOWNGRADE</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+</html>
